@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broom-racing</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div id="word-orderer"></div>
+    <br />
+    <div id="game-state-editor-container">
+        <div id="game-state-editor">
+            <div>SCORE: <input id="score-editor" type="text"> <button id="score-editor-button"
+                    onclick="onSubmitScoreEdit()">submit</button></div>
+            <div>LOCK: <input id="lock-editor" type="text" style="width: 300px;"> <button id="lock-editor-button"
+                    onclick="onSubmitLockEdit()">submit</button></div>
+            <div>RLOCK: <input id="rlock-editor" type="text"> <button id="rlock-editor-button"
+                    onclick="onSubmitRlock()">submit</button></div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>

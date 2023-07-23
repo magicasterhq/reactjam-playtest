@@ -1,0 +1,99 @@
+* {
+  box-sizing: border-box;
+}
+
+#word-orderer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: center;
+  gap: 20px;
+}
+
+#word-main-panel {
+  height: 400px;
+  width: 400px;
+}
+
+#word-card-preview-panel {
+  height: 400px;
+  width: 400px;
+  border-style: solid;
+  padding: 0px 10px;
+}
+
+#word-orderer-panel {
+  height: 400px;
+  width: 400px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#word-orderer-panel > div {
+  border-style: solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+}
+
+#word-orderer-preview {
+  font-size: 48px;
+  height: 50px;
+  border-style: solid;
+  width: 250px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#word-orderer-panel-layout {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  gap: 10px;
+}
+
+#word-orderer-submit-word-panel {
+  width: 200px;
+  padding: 10px;
+  border-style: solid;
+  overflow-y: scroll;
+  height: 400px;
+}
+
+#word-orderer-card-panel {
+  width: 200px;
+  padding: 10px;
+  border-style: solid;
+  overflow-y: scroll;
+  height: 400px;
+}
+
+#word-orderer-score-board {
+  border-style: solid;
+  padding: 5px;
+}
+
+#word-orderer-button-group {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+#game-state-editor {
+  border-style: solid;
+  width: 800px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 10px;
+  justify-items: center;
+}
+
+#game-state-editor-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

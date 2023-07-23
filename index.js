@@ -23,8 +23,46 @@ var score = 0
 var previewCardIndex = null
 var rlock = 0
 
+
 function randomChar() {
-    return String.fromCharCode(Math.floor(Math.random() * 26) + 65)
+    const charProps = [
+        ['E', 11.1607],
+        ['A', 8.4966],
+        ['R', 7.5809],
+        ['I', 7.5448],
+        ['O', 7.1635],
+        ['T', 6.9509],
+        ['N', 6.6544],
+        ['S', 5.7351],
+        ['L', 5.4893],
+        ['C', 4.5388],
+        ['U', 3.6308],
+        ['D', 3.3844],
+        ['P', 3.1671],
+        ['M', 3.0129],
+        ['H', 3.0034],
+        ['G', 2.4705],
+        ['B', 2.0720],
+        ['F', 1.8121],
+        ['Y', 1.7779],
+        ['W', 1.2899],
+        ['K', 1.1016],
+        ['V', 1.0074],
+        ['X', 0.2902],
+        ['Z', 0.2722],
+        ['J', 0.1965],
+        ['Q', 0.1962],]
+    const random = Math.random() * 100
+    let acc = 0
+    for (let index = 0; index < charProps.length; index++) {
+        const [char, props] = charProps[index];
+        acc += props
+        if (acc >= random) {
+            return char
+        }
+    }
+
+    return 'E'
 }
 
 function renderWord() {
@@ -157,16 +195,29 @@ function updateScoreFromWord(word) {
 }
 
 function getRandomCharArray(size) {
-    let temp
-    while (true) {
-        temp = Array(4 * 4).fill(1).map(() => randomChar())
-        if (temp.filter(x => x === 'A' || x === 'E' || x === 'I' || x === 'O' || x === 'U').length > 3) {
-            break;
+    const randomCharArray = Array(size).fill(1).map(() => randomChar())
+    let checkMap = {}
+    let result = []
+    for (let index = 0; index < randomCharArray.length; index++) {
+        const char = randomCharArray[index];
+        if (!checkMap.hasOwnProperty(char)) checkMap[char] = 0
+        if (checkMap[char] < 2) {
+            checkMap[char] += 1
+            result.push(char)
         } else {
-            temp = Array(4 * 4).fill(1).map(() => randomChar())
+            while (true) {
+                const newChar = randomChar()
+                if (checkMap[newChar] < 2) {
+                    checkMap[newChar] += 1
+                    result.push(newChar)
+                    break
+                }
+            }
         }
+
+
     }
-    return temp
+    return result
 }
 
 function onReset() {

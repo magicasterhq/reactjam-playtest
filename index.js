@@ -13,7 +13,7 @@ const cardsInfo = [
     { name: "reduce score", type: "curse", desc: "-20% score (5% - 25% random range)" },
 ]
 
-var currentRandomChar = getRandomCharArray(4 * 4)
+var currentRandomChar = randomCharArray([], 2, 4 * 4)
 var currentSelectChar = []
 var lockChar = []
 var submitWord = []
@@ -23,47 +23,6 @@ var score = 0
 var previewCardIndex = null
 var rlock = 0
 
-
-function randomChar() {
-    const charProps = [
-        ['E', 11.1607],
-        ['A', 8.4966],
-        ['R', 7.5809],
-        ['I', 7.5448],
-        ['O', 7.1635],
-        ['T', 6.9509],
-        ['N', 6.6544],
-        ['S', 5.7351],
-        ['L', 5.4893],
-        ['C', 4.5388],
-        ['U', 3.6308],
-        ['D', 3.3844],
-        ['P', 3.1671],
-        ['M', 3.0129],
-        ['H', 3.0034],
-        ['G', 2.4705],
-        ['B', 2.0720],
-        ['F', 1.8121],
-        ['Y', 1.7779],
-        ['W', 1.2899],
-        ['K', 1.1016],
-        ['V', 1.0074],
-        ['X', 0.2902],
-        ['Z', 0.2722],
-        ['J', 0.1965],
-        ['Q', 0.1962],]
-    const random = Math.random() * 100
-    let acc = 0
-    for (let index = 0; index < charProps.length; index++) {
-        const [char, props] = charProps[index];
-        acc += props
-        if (acc >= random) {
-            return char
-        }
-    }
-
-    return 'E'
-}
 
 function renderWord() {
     const wordOrdererElem = document.getElementById("word-orderer")
@@ -168,12 +127,11 @@ function onSave() {
     const word = currentSelectChar.map(value => currentRandomChar[value]).join("")
     submitWord.push(word)
 
-    const substitute = getRandomCharArray(currentSelectChar.length)
+    const substitute = randomCharArray(currentRandomChar.filter((_, index) => !lockChar.includes(index)), 2, currentSelectChar.length)
     for (let index = 0; index < substitute.length; index++) {
         const substituteValue = substitute[index]
         currentRandomChar[currentSelectChar[index]] = substituteValue
     }
-    lockChar = [...lockChar]
     currentSelectChar = []
     updateScoreFromWord(word)
     randomCard(word)
@@ -194,34 +152,8 @@ function updateScoreFromWord(word) {
     score += word.length * 2
 }
 
-function getRandomCharArray(size) {
-    const randomCharArray = Array(size).fill(1).map(() => randomChar())
-    let checkMap = {}
-    let result = []
-    for (let index = 0; index < randomCharArray.length; index++) {
-        const char = randomCharArray[index];
-        if (!checkMap.hasOwnProperty(char)) checkMap[char] = 0
-        if (checkMap[char] < 2) {
-            checkMap[char] += 1
-            result.push(char)
-        } else {
-            while (true) {
-                const newChar = randomChar()
-                if (checkMap[newChar] < 2) {
-                    checkMap[newChar] += 1
-                    result.push(newChar)
-                    break
-                }
-            }
-        }
-
-
-    }
-    return result
-}
-
 function onReset() {
-    currentRandomChar = getRandomCharArray(4 * 4)
+    currentRandomChar = randomCharArray([], 2, 4 * 4)
     currentSelectChar = []
     lockChar = []
     renderWord()
@@ -255,8 +187,6 @@ function updateGameStateEditor() {
     document.getElementById("score-editor").value = score
     document.getElementById("lock-editor").value = JSON.stringify(lockChar)
     document.getElementById("rlock-editor").value = rlock
-
-
 }
 
 function onSubmitScoreEdit() {
